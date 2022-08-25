@@ -1,0 +1,43 @@
+<div class="container">
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <h1 class="mb-5 display-4">Document Annotate</h1>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <mat-form-field class="example-chip-list" appearance="fill">
+            <mat-label>Add Annotations</mat-label>
+            <mat-chip-list #chipList aria-label="Label selection">
+                <mat-chip *ngFor="let Label of Labels" (removed)="remove(Label)">
+                    {{Label.name}}
+                    <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+                </mat-chip>
+                <input placeholder="New Label..." [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+        </mat-form-field>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12 mb-5">
+            <button type="button" [ngClass]="{'activeAnt': Label.name == antLabel}" class="btn btn-primary me-2" *ngFor="let Label of Labels" [style.backgroundColor]="Label.color" (click)="seletectAnnotation(Label.name, Label.color)">
+        {{Label.name}}
+      </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <ngx-annotate-text (click)="addAnnotation()" [(annotations)]="annotations" [removable]="true" [text]="text" annotationClass="my-annotation" #annotateText>
+        </ngx-annotate-text>
+    </div>
+
+    <div class="row">
+        <button type="button" class="btn btn-primary me-2 mt-5" (click)="downloadJson()">
+      Download Json File
+    </button>
+    </div>
+
+</div>
